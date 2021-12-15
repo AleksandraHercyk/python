@@ -43,11 +43,9 @@ def get_month(year, leap):
         file1.close()
         exit()
     else:
-
-        m = int(month)
-        if month.isdigit() and 1 <= m <= 12:
+        if month.isdigit() and 1 <= int(month) <= 12:
             # print("poprawny miesiąc")
-
+            m = int(month)
             if leap is True and m == 2:
                 print("Luty", year, "roku zawiera(ł) 29 dni.")
                 file1.write("Luty " + str(year) + " roku zawiera(ł) 29 dni." + "\n")
