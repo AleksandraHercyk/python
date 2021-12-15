@@ -9,22 +9,23 @@ days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 def get_year(leap):
     year = input("Podaj rok: ")
-    if year.isdigit() and int(year) < 10000:
+    if year.isdigit():
         year = int(year)
-        if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
-            print(year, "to rok przestępny")
-            leap = True
+        if int(year) >= 10000:
+            print("Niestety obsługiwane są jedynie lata do 9999 roku, spróbuj jeszcze raz!")
+            get_year(leap)
         else:
-            print(year, "to rok nieprzestępny")
-            leap = False
+             if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+                print(year, "to rok przestępny")
+                leap = True
+             else:
+                print(year, "to rok nieprzestępny")
+                leap = False
 
         get_month(year, leap)
 
     else:
-        if int(year) < 10000:
-            print("Niestety obsługiwane są jedynie lata do 9999 roku, spróbuj jeszcze raz!")
-        else:
-            print("Błędna wartość, spróbuj jeszcze raz!")
+        print("Błędna wartość, spróbuj jeszcze raz!")
         get_year(leap)
     return year, leap
 
