@@ -10,7 +10,7 @@ days = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 
 def get_year():
     year = input("Podaj rok: ")
-    if year.isdigit():
+    if year.isdigit() and int(year) != 0:
         year = int(year)
         if int(year) >= 10000:
             print("Niestety obsługiwane są jedynie lata do 9999 roku, spróbuj jeszcze raz!")
