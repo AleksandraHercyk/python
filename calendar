@@ -58,26 +58,26 @@ def get_day(leap, month):
             return get_day(leap, month)
 
 if __name__ == "__main__":
-leap, year = get_year()
-if leap is True:
-    print(year, "to rok przestępny")
-    line = [str(year), " to rok przestępny.\n"]
-else:
-    print(year, "to rok nieprzestępny")
-    line = [str(year), " to rok nieprzestępny.\n"]
-file1.writelines(line)
+    leap, year = get_year()
+    if leap is True:
+        print(year, "to rok przestępny")
+        line = [str(year), " to rok przestępny.\n"]
+    else:
+        print(year, "to rok nieprzestępny")
+        line = [str(year), " to rok nieprzestępny.\n"]
+    file1.writelines(line)
 
-month = int(get_month())
-if leap is True and month == 2:
-    print("Luty", year, "roku zawiera(ł) 29 dni.")
-    file1.write("Luty " + str(year) + " roku zawiera(ł) 29 dni." + "\n")
-else:
-    d = datetime.date(int(year), month, 1)
-    print(d.strftime("%B").capitalize(), "zawiera ", days[month - 1], "dni.")
-    file1.write(d.strftime("%B").capitalize() + " zawiera " + str(days[month - 1]) + " dni." + " \n")
+    month = int(get_month())
+    if leap is True and month == 2:
+        print("Luty", year, "roku zawiera(ł) 29 dni.")
+        file1.write("Luty " + str(year) + " roku zawiera(ł) 29 dni." + "\n")
+    else:
+        d = datetime.date(int(year), month, 1)
+        print(d.strftime("%B").capitalize(), "zawiera ", days[month - 1], "dni.")
+        file1.write(d.strftime("%B").capitalize() + " zawiera " + str(days[month - 1]) + " dni." + " \n")
 
-day, day_of_the_year = get_day(leap, month)
-d = datetime.date(int(year), month, int(day))
-print(d.strftime("%d/%m/%Y"), "to", day_of_the_year, "dzień roku.")
-file1.write(d.strftime("%d/%m/%Y")+" to " + str(day_of_the_year) + " dzień roku."+"\n")
-file1.close()
+    day, day_of_the_year = get_day(leap, month)
+    d = datetime.date(int(year), month, int(day))
+    print(d.strftime("%d/%m/%Y"), "to", day_of_the_year, "dzień roku.")
+    file1.write(d.strftime("%d/%m/%Y")+" to " + str(day_of_the_year) + " dzień roku."+"\n")
+    file1.close()
