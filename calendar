@@ -57,7 +57,7 @@ def get_day(leap, month):
             print("Błędna wartość, spróbuj jeszcze raz!")
             return get_day(leap, month)
 
-
+if __name__ == "__main__":
 leap, year = get_year()
 if leap is True:
     print(year, "to rok przestępny")
