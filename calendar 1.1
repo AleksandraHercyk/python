@@ -1,0 +1,95 @@
+import os
+import datetime
+from sys import exit
+import locale
+locale.setlocale(locale.LC_TIME, "pl_PL")
+import sys
+import Logger
+
+
+# file1 = open(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')+"\\kalendarz.txt", "w")
+days = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+
+
+def get_year():
+    year = input("Podaj rok: ")
+    if year.isdigit() and int(year) != 0:
+        return check_year(year)
+    else:
+        print("Błędna wartość, spróbuj jeszcze raz!")
+        return get_year()
+
+def check_year(year):
+    year = int(year)
+    if int(year) >= 10000:
+        print("Niestety obsługiwane są jedynie lata do 9999 roku, spróbuj jeszcze raz!")
+        return get_year()
+    else:
+        if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+            return [True, year]
+        else:
+            return [False, year]
+
+def get_month():
+    month = input("Wprowadź miesiąc liczbowo lub wciśnij Enter, aby zakończyć: ")
+    if month == "":
+        # file1.close()
+        exit()
+    else:
+        if month.isdigit() and 1 <= int(month) <= 12:
+            return month
+        else:
+            print("Błedna wartość, spróbuj jeszcze raz!")
+            return get_month()
+
+def get_days_in_month(year, month):
+    return days[month - 1]
+
+def get_day(leap, month):
+    day = input("Podaj dzień lub wciśnij Enter, aby zakończyć: ")
+    if day == "":
+        # file1.close()
+        exit()
+    else:
+        if day.isdigit() and int(day) >= 1 and (int(day) <= days[month-1] or (month == 2 and leap is True and int(day) == 29)):
+            return get_day_of_year(leap, month, day)
+        else:
+            print("Błędna wartość, spróbuj jeszcze raz!")
+            return get_day(leap, month)
+
+def get_day_of_year(leap, month, day):
+    day_of_the_year = int(day)
+    for i in range(month - 1):
+        day_of_the_year = day_of_the_year + int(days[i])
+
+    if leap is True and month > 2:
+        day_of_the_year = day_of_the_year + 1
+
+    return [day, day_of_the_year]
+
+if __name__ == "__main__":
+    sys.stdout = Logger.Logger()
+    sys.stdout.add_log_file(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')+"\\log.txt")
+    leap, year = get_year()
+    if leap is True:
+        print(year, "to rok przestępny")
+        # line = [str(year), " to rok przestępny.\n"]
+    else:
+        print(year, "to rok nieprzestępny")
+        # line = [str(year), " to rok nieprzestępny.\n"]
+    # file1.writelines(line)
+
+    month = int(get_month())
+    if leap is True and month == 2:
+        print("Luty", year, "roku zawiera(ł) 29 dni.")
+        # file1.write("Luty " + str(year) + " roku zawiera(ł) 29 dni." + "\n")
+    else:
+        d = datetime.date(int(year), month, 1)
+        print(d.strftime("%B").capitalize(), "zawiera ", get_days_in_month(year, month), "dni.")
+        # file1.write(d.strftime("%B").capitalize() + " zawiera " + str(days[month - 1]) + " dni." + " \n")
+
+    day, day_of_the_year = get_day(leap, month)
+    d = datetime.date(int(year), month, int(day))
+    print(d.strftime("%d/%m/%Y"), "to", day_of_the_year, "dzień roku.")
+    # file1.write(d.strftime("%d/%m/%Y")+" to " + str(day_of_the_year) + " dzień roku."+"\n")
+    # file1.close()
